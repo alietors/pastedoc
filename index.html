@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>$(document).ready(function(){
+
+        tinymce.init({
+            selector:'#document',
+            plugins: "save",
+            toolbar: "save | insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
+
+        $('#btnDocumentSave').click(function(){
+            var mi = tinymce.get('document').getContent();
+            alert(mi);
+
+            //The data is now in var `mi`, use AJAX to save via PHP
+            $.ajax({
+                type: 'post',
+                url: 'localhost',
+                data: 'tinydata=' +mi,
+                success:function(){
+                }
+            });
+        });
+
+    });</script>
+</head>
+<body>
+<textarea id="document" name="document" rows="8" cols="73"></textarea>
+<button id="btnDocumentSave">Save</button>
+</body>
+</html>
