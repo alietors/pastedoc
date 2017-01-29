@@ -13,12 +13,10 @@
 
         $('#btnDocumentSave').click(function(){
             var mi = tinymce.get('document').getContent();
-            alert(mi);
 
-            //The data is now in var `mi`, use AJAX to save via PHP
             $.ajax({
                 type: 'post',
-                url: 'localhost',
+                url: '/document',
                 data: 'tinydata=' +mi,
                 success:function(){
                 }
@@ -28,7 +26,7 @@
     });</script>
 </head>
 <body>
-<textarea id="document" name="document" rows="8" cols="73"></textarea>
-<button id="btnDocumentSave">Save</button>
+    <textarea id="document" name="document" rows="8" cols="73"></textarea>
+    <button id="btnDocumentSave">Save</button>
 </body>
 </html>
