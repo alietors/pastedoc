@@ -2,36 +2,20 @@
 <html>
 <head>
     <title> Pastedoc </title>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>$(document).ready(function(){
-
-        tinymce.init({
-            selector:'#document'
-        });
-
-        $('#btnDocumentSave').click(function(){
-            var document = tinymce.get('document').getContent();
-            var title = $('#title').val();
-
-            $.ajax({
-                type: 'post',
-                url: '/document',
-                data: { tinydata: document, title: title},
-                async: false,
-
-                success:function(data){
-                    window.location = "/document/"+data.id;
-                }
-            });
-        });
-
-    });</script>
 </head>
 <body>
-<label>Title</label><br>
-<input type="text" id="title">
-<textarea id="document" name="document" rows="8" cols="73"></textarea>
-<button id="btnDocumentSave">Save</button>
+<div>
+    <a href="#" class="btn btn-save" id="btnDocumentSave">Save</a>
+    <h2><label for="title">Title</label></h2>
+    <input class="title" type="text" id="title">
+</div>
+<div>
+    <h2><label for="document">Body</label></h2>
+    <textarea id="document" name="document" rows="8" cols="73"></textarea>
+</div>
 </body>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type=text/javascript src="{{ url_for('static', filename='assets/index.js') }}"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/styles.css') }}">
 </html>
