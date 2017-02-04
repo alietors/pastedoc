@@ -1,9 +1,9 @@
 import os
 
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, request, jsonify
 
 from db import db
-from db.model.note import Note
+from db.model.document import Document
 
 
 def create_app():
@@ -16,20 +16,30 @@ def create_app():
 app = create_app()
 db.create_all(app=app)
 
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
+
 @app.route("/document", methods = ["POST"])
 def create_document():
-    title = "My Document"
-    body = request.form["tinydata"]
+    title = request.form['title']
+    body = request.form['tinydata']
 
-    note = Note(title=title, body=body)
-    db.session.add(note)
+    doc = Document(title=title, body=body)
+    db.session.add(doc)
+    db.session.flush()
     db.session.commit()
 
-    return redirect("/")
+    return jsonify(id=doc.id)
+
+
+@app.route("/document/<int:id>", methods = ["GET"])
+def get_document(id):
+    document = Document.query.get(id)
+
+    return render_template("document.html", title=document.title, body=document.body)
 
 if __name__ == "__main__":
     app.run(debug=True)

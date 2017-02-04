@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title> Pastedoc </title>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>$(document).ready(function(){
 
         tinymce.init({
-            selector:'#document',
-            plugins: "save",
-            toolbar: "save | insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            selector:'#document'
         });
 
         $('#btnDocumentSave').click(function(){
-            var mi = tinymce.get('document').getContent();
+            var document = tinymce.get('document').getContent();
+            var title = $('#title').val();
 
             $.ajax({
                 type: 'post',
                 url: '/document',
-                data: 'tinydata=' +mi,
-                success:function(){
+                data: { tinydata: document, title: title},
+                async: false,
+
+                success:function(data){
+                    window.location = "/document/"+data.id;
                 }
             });
         });
@@ -26,7 +29,9 @@
     });</script>
 </head>
 <body>
-    <textarea id="document" name="document" rows="8" cols="73"></textarea>
-    <button id="btnDocumentSave">Save</button>
+<label>Title</label><br>
+<input type="text" id="title">
+<textarea id="document" name="document" rows="8" cols="73"></textarea>
+<button id="btnDocumentSave">Save</button>
 </body>
 </html>
