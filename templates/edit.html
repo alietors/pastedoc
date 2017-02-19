@@ -5,14 +5,14 @@
 </head>
 <body>
 <div>
-    <a href="#" class="btn btn-save" id="btnDocumentSave">Save</a>
-    <input type="checkbox" id="js-readonly">Read only
+    <a href="#" class="btn btn-save" id="btnDocumentUpdate">Update</a>
+    <input type="checkbox" id="js-readonly" {% if readonly %} checked {% endif %}>Read only
     <h2><label for="title">Title</label></h2>
-    <input class="title" type="text" id="title">
+    <input class="title" type="text" id="title" value="{{ title }}">
 </div>
 <div>
     <h2><label for="document">Body</label></h2>
-    <textarea id="document" name="document"></textarea>
+    <textarea id="document" name="document">{{ body }}</textarea>
 </div>
 </body>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
